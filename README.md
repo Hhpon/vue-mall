@@ -15,7 +15,7 @@ vue2 + vuex + vue-router +axios+ element-ui+ webpack + ES6/7 + flex + svg
 ```
 git clone https://github.com/Apple-ljj/vue-junmall.git
 
-cd vue-junmall
+cd vue-junmall-master
 
 npm install
 
