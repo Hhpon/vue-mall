@@ -30,8 +30,8 @@ npm run dev
 ```
 
 ## 另外
-####此项目有配套的后台系统，如果想体验前后台同时开发，可以下载对应的后台系统：[后台项目传送地址](https://github.com/Apple-ljj/node-junmall.git)。
-####注：使用本地服务端请修改代理，路径./config/index.js，默认是本人服务器代理
+此项目有配套的后台系统，如果想体验前后台同时开发，可以下载对应的后台系统：[后台项目传送地址](https://github.com/Apple-ljj/node-junmall.git)。
+### 注：使用本地服务端请修改代理，路径./config/index.js，默认是本人服务器代理
 
 ```
   dev: {
@@ -39,7 +39,7 @@ npm run dev
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
-        //本地服务器请使用下面代理
+        //本地服务端请使用下面代理
         '/goods':{
             target:'http://localhost:3000'
         },
