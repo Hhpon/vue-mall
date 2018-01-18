@@ -72,7 +72,7 @@ import axios from 'axios'
       beforeAvatarUpload(file) {
         console.log(file.type)
         const isJPG = file.type === 'image/jpeg';
-        const isLt2M = file.size / 1024 / 1024 < 1;
+        const isLt2M = file.size / 500 / 500 < 1;
         console.log(file.size)
         if (!isJPG) {
           this.$message.error('只支持JPG格式!');
@@ -94,7 +94,7 @@ import axios from 'axios'
               axios.post('/admin/delimg',{imgId:row.imgId}).then((respone)=>{
                 let res =respone.data;
                 if(res.status=='0'){
-                  this.imglist();
+                  this.userlist();
                   this.$message({
                     message: '删除成功',
                     type: 'success'
@@ -104,7 +104,7 @@ import axios from 'axios'
                 }
               })
       },
-      imglist(){
+      userlist(){
             this.loading=true;
             axios.get("/admin/imglist").then((result)=>{
               this.loading=false;
