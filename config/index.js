@@ -5,38 +5,38 @@
 const path = require('path')
 
 module.exports = {
+    
   dev: {
-
     // Paths
     assetsSubDirectory: 'static',
     assetsPublicPath: '/',
     proxyTable: {
          //下面代理无需本地服务端
-        '/goods':{
-            target:'http://120.78.185.163:3000'
-        },
-        '/goods/*':{
-            target:'//http://120.78.185.163:3000'
-        },
-        '/users/**':{
-            target:'http://120.78.185.163:3000'
-        },
-        '/admin/**':{
-            target:'http://120.78.185.163:3000'
-        }
-        //下面代理需要依赖本地服务端
         // '/goods':{
-        //     target:'http://localhost:3000'
+        //     target:'http://120.78.185.163:3000'
         // },
         // '/goods/*':{
-        //     target:'http://localhost:3000'
+        //     target:'//http://120.78.185.163:3000'
         // },
         // '/users/**':{
-        //     target:'http://localhost:3000'
+        //     target:'http://120.78.185.163:3000'
         // },
         // '/admin/**':{
-        //     target:'http://localhost:3000'
+        //     target:'http://120.78.185.163:3000'
         // }
+        //下面代理需要依赖本地服务端
+        '/goods':{
+            target:'http://localhost:3000'
+        },
+        '/goods/*':{
+            target:'http://localhost:3000'
+        },
+        '/users/**':{
+            target:'http://localhost:3000'
+        },
+        '/admin/**':{
+            target:'http://localhost:3000'
+        }
     },
 
     // Various Dev Server settings
