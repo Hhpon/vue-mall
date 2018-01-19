@@ -466,7 +466,7 @@ import Swiper from 'swiper';
             setTimeout(()=>{
             this.page++
             this.getGoodsList(true);
-              this.busy=false
+            this.busy=false
             },1000)
           },
         }
