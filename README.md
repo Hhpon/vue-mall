@@ -35,7 +35,8 @@ npm run dev
 ### [后台演示](http://120.78.185.163/junmall/#/admin) （请用chrome浏览器或者极速模式查看）
 
 
-## 另外
+# 另外
+
 此项目有配套的后台系统，如果想体验前后台同时开发，可以下载对应的后台系统：[后台项目传送地址](https://github.com/Apple-ljj/node-junmall.git)。
 ### 注：使用本地服务端请修改代理，路径./config/index.js，默认是本人服务器代理
 
