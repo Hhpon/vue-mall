@@ -294,9 +294,15 @@ import axios from 'axios'
               this.init();
           },
           pay(productId){
-                this.$router.push({
+            console.log(this.$store.state.mdShow)
+            if(this.$store.state.mdShow){
+                    this.mdShow=true;
+            }else{
+               this.$router.push({
                     path:'/address?shopid='+productId
               })
+            }
+           
           },
           //购物车模态框
           closePop(){
@@ -308,7 +314,7 @@ import axios from 'axios'
           },
           closeCart(){
              this.mdShowCart=false;
-          }
+          },
         }
     }
 </script>

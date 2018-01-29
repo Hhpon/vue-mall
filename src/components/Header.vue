@@ -146,6 +146,7 @@
         }
       };
       return{
+        mdshow:false,
         namesize:15,
         errorTip:false,
         logindiv:false,
@@ -183,7 +184,7 @@
           this.checklogin();
         },
     computed:{
-      ...mapState(['carCount'])//简写
+      ...mapState(['carCount','mdShow'])//简写
       // carCount(){
          // return this.$store.state.carCount;
       // },
@@ -195,7 +196,8 @@
                   //接口直接赋值
                 this.nikeName= res.data.result;
                   this.getCart();
-              }
+                   this.$store.commit("btnmdShow",false)
+                 }
           })
         },
         btnLogin(formName){
@@ -226,7 +228,7 @@
             let res=renponse.data;
                   
             if(res.status=='0'){
-              //console.log("登录成功")
+              console.log("登录成功")
               this.logindiv=false;
               this.rorTip=false;
               this.nikeName=res.result.userName;
@@ -236,6 +238,7 @@
                 type: 'success',
                 duration: 2000
             });
+                    this.$store.commit("btnmdShow",false)
               this.getCart();
             }else{
               // this.errorTip=true;
@@ -253,7 +256,7 @@
             let res=renponse.data;
             if(res.status=='0'){
               this.nikeName = ''
-
+                    this.$store.commit("btnmdShow",true)
             }
         })
       },
@@ -284,6 +287,14 @@
                 type: 'success',
                 duration: 2000
             });
+              //注册成功后自动登录
+              axios.post('/users/login',{
+            userName:this.ruleForm.name,
+            userPwd:this.ruleForm.checkPass
+          }).then((renponse)=>{
+            let res=renponse.data;      
+              this.nikeName=res.result.userName;
+          })     
             }else{
                 this.$notify.error({
                   title: '错误提示',

@@ -21,7 +21,8 @@ Vue.filter('currency',currency)
 Vue.use(Vuex);
 const store = new Vuex.Store({
 	state:{
-		carCount:0
+		carCount:0,
+		mdShow:true,
 	},
 	mutations:{
 		updateCar(state,carCount){
@@ -29,6 +30,9 @@ const store = new Vuex.Store({
 		},
 		initCar(state,carCount){
 			state.carCount=carCount;
+		},
+		btnmdShow(state,mdShow){
+			state.mdShow=mdShow;
 		}
 	}
 })
