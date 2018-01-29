@@ -55,7 +55,7 @@
             </ul>
           </div>
           <ul class="cart-item-list">
-            <li v-for="item in CartList" v-if="item.checked=='1'">
+            <li v-for="item in CartList" v-if="item.checked=='1'||item.classify!=null">
               <div class="cart-tab-1">
                 <div class="cart-item-pic">
                   <a href="#"><img v-lazy="item.productImage" alt=""></a>
@@ -67,7 +67,7 @@
                 </div>
               </div>
               <div class="cart-tab-2">
-                <div class="item-price">{{item.salePrice|currency('$')}}</div>
+                <div class="item-price">{{item.salePrice|currency('&yen')}}</div>
               </div>
               <div class="cart-tab-3">
                 <div class="item-quantity">
@@ -80,7 +80,7 @@
                 </div>
               </div>
               <div class="cart-tab-4">
-                <div class="item-price-total">{{(item.productNum*item.salePrice)|currency('$')}}</div>
+                <div class="item-price-total">{{(item.productNum*item.salePrice)|currency('&yen')}}</div>
               </div>
             </li>
           </ul>
@@ -95,19 +95,19 @@
             </li>
             <li>
               <span>运费:</span>
-              <span>{{Shipping|currency('$')}}</span>
+              <span>{{Shipping|currency('&yen')}}</span>
             </li>
             <li>
               <span>优惠:</span>
-              <span>{{Discount|currency('$')}}</span>
+              <span>{{Discount|currency('&yen')}}</span>
             </li>
             <li>
               <span>关税:</span>
-              <span>{{Tax|currency('$')}}</span>
+              <span>{{Tax|currency('&yen')}}</span>
             </li>
             <li class="order-total-price">
               <span>合计:</span>
-              <span>{{Ordertotal|currency('$')}}</span>
+              <span>{{Ordertotal|currency('&yen')}}</span>
             </li>
           </ul>
         </div>
@@ -156,10 +156,12 @@ import axios from 'axios'
         },
         methods:{
           init(){
-            axios.get("/users/CartList").then((respone)=>{
+            axios.post("/users/CartList",{productId:this.$route.query.shopid}).then((respone)=>{
               this.CartList =respone.data.result
               this.CartList.forEach((itme)=>{
-                if(itme.checked=='1'){
+                //购物车中的为1，立即购买判断分类不为空 这里的逻辑写得不太好，主要因为我懒
+                if(itme.checked=='1'||itme.classify!=null){
+                  //价格+数量
                   this.Itemsubtotal += itme.salePrice*itme.productNum
                 }
               })
@@ -168,8 +170,10 @@ import axios from 'axios'
           },
           payMent(){
             var addressId=this.$route.query.addressId;
+            console.log(addressId)
             axios.post('/users/payMent',{
               addressId:addressId,
+              productId:this.$route.query.shopid,
               ordertotal:this.Ordertotal
             }).then((respone)=>{
                 let res =respone.data;

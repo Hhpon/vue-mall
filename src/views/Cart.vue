@@ -221,7 +221,7 @@ import axios from 'axios'
         },
         methods:{
             init(){
-              axios.get("/users/CartList").then((respone)=>{
+              axios.post("/users/CartList").then((respone)=>{
                 this.CartList =respone.data.result
               })
             },

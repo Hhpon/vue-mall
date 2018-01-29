@@ -1,10 +1,10 @@
 <template>
-    <div>
-    <nav-header></nav-header>
-    <nav-bread>
-      <span>收货地址</span>
-    </nav-bread>
-      <div class="checkout-page">
+	  <div>
+	  <nav-header></nav-header>
+	  <nav-bread>
+	  	<span>收货地址</span>
+	  </nav-bread>
+  		<div class="checkout-page">
   <svg style="position: absolute; width: 0; height: 0; overflow: hidden;" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink">
     <defs>
       <symbol id="icon-add" viewBox="0 0 31 32">
@@ -121,13 +121,13 @@
     </div>
   </div>
 </div>
-  <modal :mdShow='isMdshow' @close="closeModal">
-    <p slot="message">您是否确认删除</p>
-    <div slot='btnGroup'>
-      <a  class="btn btn--m" href="javascript:;" @click="delAddress">确认</a>
-      <a  class="btn btn--m" href="javascript:;" @click="isMdshow=false">取消</a>
-    </div>
-  </modal>
+	<modal :mdShow='isMdshow' @close="closeModal">
+		<p slot="message">您是否确认删除</p>
+		<div slot='btnGroup'>
+			<a  class="btn btn--m" href="javascript:;" @click="delAddress">确认</a>
+			<a  class="btn btn--m" href="javascript:;" @click="isMdshow=false">取消</a>
+		</div>
+	</modal>
        <div class="md-modal modal-msg md-modal-transition " v-bind:class="{'md-show':ress}">
           <div class="md-modal-inner">
             <div class="md-top">
@@ -161,7 +161,7 @@
           </div>
         </div>
              <div class="md-overlay" v-if='ress' @click='ress=false'></div>
-  <nav-footer></nav-footer>
+	<nav-footer></nav-footer>
      </div>
 </template>
   <style scoped>
@@ -235,12 +235,12 @@ import axios from 'axios'
               telsize:11,
               postsize:10,
               ress:false,
-              limit:3,
-              checkIndex:0,
-              selectedAddreid:'',
-              addressList:[],
-              isMdshow:false,
-              addressId:'',
+            	limit:3,
+            	checkIndex:0,
+            	selectedAddreid:'',
+            	addressList:[],
+            	isMdshow:false,
+            	addressId:'',
           ruleForm: {
               userName:'',
               streetName:'',
@@ -274,58 +274,56 @@ import axios from 'axios'
           this.init();
         },
         computed:{
-          addressListFilter(){
-            return this.addressList.slice(0,this.limit)
-          }
+        	addressListFilter(){
+        		return this.addressList.slice(0,this.limit)
+        	}
         },
         methods:{
-          init(){
-            axios.get('/users/addressList').then((response)=>{
-              let res=response.data;
-              if (res.status=='0'){
-                this.addressList=res.result.reverse();
+        	init(){
+        		axios.get('/users/addressList').then((response)=>{
+        			let res=response.data;
+        			if (res.status=='0'){
+        				this.addressList=res.result.reverse();
                 this.addressList.forEach((item,index) => {
                       if(item.isDefault){
                           this.selectedAddreid = item.addressId;
-
                       }
                   });
-              };
-            //  console.log(this.addressList)
-            })
-              console.log(this.selectedAddreid)
-          },
-          expand(){
-            if(this.limit==3){
-              this.limit=this.addressList.length;
-            }else{
-              this.limit=3
-            }
-          },
-          setDefault(addressId){
-            axios.post('/users/setDefault',{addressId:addressId}).then((response)=>{
-              let res=response.data;
-              if (res.status=='0'){
-                this.init();
-              };
-            })
-          },
-          closeModal(){
-            this.isMdshow-false;
-          },
-          delAddressConfirm(addressId){
+        			};
+        		//	console.log(this.addressList)
+        		})
+        	},
+        	expand(){
+        		if(this.limit==3){
+        			this.limit=this.addressList.length;
+        		}else{
+        			this.limit=3
+        		}
+        	},
+        	setDefault(addressId){
+        		axios.post('/users/setDefault',{addressId:addressId}).then((response)=>{
+        			let res=response.data;
+        			if (res.status=='0'){
+        				this.init();
+        			};
+        		})
+        	},
+        	closeModal(){
+        		this.isMdshow-false;
+        	},
+        	delAddressConfirm(addressId){
                 this.isMdshow=true;
                 this.addressId=addressId;
-          },
-          delAddress(){
-            axios.post('/users/delAddress',{addressId:this.addressId}).then((response)=>{
-              let res=response.data;
-              if (res.status=='0'){
-                this.isMdshow=false;
-                this.init();
-              };
-            })
-          },
+        	},
+        	delAddress(){
+        		axios.post('/users/delAddress',{addressId:this.addressId}).then((response)=>{
+        			let res=response.data;
+        			if (res.status=='0'){
+        				this.isMdshow=false;
+        				this.init();
+        			};
+        		})
+        	},
           btnNext(){
               if (this.addressList.length==0){
                      this.$notify.info({
@@ -341,7 +339,7 @@ import axios from 'axios'
                 });
             }else{
                 this.$router.push({
-                  path:"/orderConfirm?addressId="+this.selectedAddreid,
+                  path:"/orderConfirm?addressId="+this.selectedAddreid+"&shopid="+this.$route.query.shopid,
                 })
             }
           },
@@ -350,6 +348,7 @@ import axios from 'axios'
               this.$refs[formName].resetFields();
           },
           addAddress(formName){
+  console.log('1')
           if(!this.time){
              return false;
           }

@@ -2,6 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 import Index from '@/views/Index'
 import GoodsList from '@/views/GoodsList'
+import GoodsShop from '@/views/GoodsShop'
 import Cart from '@/views/Cart'
 import Address from '@/views/Address'
 import OrderConfirm from '@/views/OrderConfirm'
@@ -21,6 +22,11 @@ export default new Router({
       path: '/',
       name: 'Index',
       component: Index
+    },
+    {
+      path: '/GoodsShop',
+      name: 'GoodsShop',
+      component: GoodsShop
     },
     {
       path: '/GoodsList',

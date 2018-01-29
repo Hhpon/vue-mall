@@ -42,16 +42,13 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in madams">
+            <li v-for="(item,index) in madams" @click="shopgo(item.productId)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
+                <img v-lazy="item.productImage" alt="">
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -70,17 +67,13 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in misters">
+            <li v-for="(item,index) in misters" @click="shopgo(item.productId)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
-                <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+              <img v-lazy="item.productImage" alt="">
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -99,17 +92,13 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in shoess">
+            <li v-for="(item,index) in shoess" @click="shopgo(item.productId)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
-                <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+              <img v-lazy="item.productImage" alt="">
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           </ul>
@@ -127,17 +116,14 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in digitals">
+            <li v-for="(item,index) in digitals" @click="shopgo(item.productId)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
+             <img v-lazy="item.productImage" alt="">
                 <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -156,17 +142,14 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in boxs">
+            <li v-for="(item,index) in boxs" @click="shopgo(item.productId,item.classify)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
+            <img v-lazy="item.productImage" alt="">
                 <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -185,17 +168,13 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-5">
           <ul>
-            <li v-for="(item,index) in foods">
+            <li v-for="(item,index) in foods" @click="shopgo(item.productId)">
               <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
-                <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+             <img v-lazy="item.productImage" alt="">
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -214,49 +193,23 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-4">
           <ul>
-            <li v-for="(item,index) in goodsList">
-              <div class="pic">
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
-                <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+            <li v-for="(item,index) in goodsList"  @click="shopgo(item.productId)">
+              <div class="pic" :a=item.productId>
+            <img v-lazy="item.productImage" alt="">
+              
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
-          
           </ul>
           <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" class="text_center">
-            <img src="./../../static/loading-svg/loading-spinning-bubbles.svg" v-show="loading">
         </div>
         </div>
       </div>
     </div>
   </div>
-     
-         <modal v-bind:mdShow="mdShow" v-on:close="closeMoadl">
-          <p slot="message">
-             请先登录,否则无法加入到购物车中!
-          </p>
-          <div slot="btnGroup">
-              <a class="btn btn--m" href="javascript:;" @click="mdShow=false">关闭</a>
-          </div>
-      </modal>
-        <modal v-bind:mdShow="mdShowCart" v-on:close="closeCart">
-        <p slot="message">
-          <svg class="icon-status-ok">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-status-ok"></use>
-          </svg>
-          <span>加入购物车成!</span>
-        </p>
-        <div slot="btnGroup">
-          <a class="btn btn--m" href="javascript:;" @click="mdShowCart = false">继续购物</a>
-          <router-link class="btn btn--m btn--red" href="javascript:;" to="/cart">查看购物车</router-link>
-        </div>
-      </modal>
       </div>
 </div>
 	  		<nav-footer></nav-footer>	  	
@@ -327,8 +280,6 @@ import Swiper from 'swiper';
                   priceChecked:'all',
                   classify:0,
                   busy:false,
-                  mdShow:false,
-                  mdShowCart:false,
       			listImg: []
             }
         },
@@ -376,21 +327,21 @@ import Swiper from 'swiper';
             })
           },
           mister(){
-            var param={pageSize:5,page:13,sort:1,classify:1,priceGt:200,priceLte:300}
+            var param={pageSize:5,page:5,sort:1,classify:1,priceGt:200,priceLte:300}
             //params传参
             axios.get("/goods/list",{params:param}).then((res)=>{
                    this.misters=res.data.result.list;        
             })
           },
           shoes(){
-                var param={pageSize:5,page:2,sort:1,classify:2,priceGt:200,priceLte:300}
+                var param={pageSize:5,page:2,sort:1,classify:2,priceGt:100,priceLte:300}
             //params传参
             axios.get("/goods/list",{params:param}).then((res)=>{
                    this.shoess=res.data.result.list;        
             })
           },
           digital(){
-            var param={pageSize:5,page:6,sort:1,classify:3,priceGt:200,priceLte:300}
+            var param={pageSize:5,page:3,sort:1,classify:3,priceGt:100,priceLte:300}
             //params传参
             axios.get("/goods/list",{params:param}).then((res)=>{
                    this.digitals=res.data.result.list;        
@@ -441,32 +392,17 @@ import Swiper from 'swiper';
               }              
             })
           },
-            addCart(productId){
-            axios.post("/goods/addCart",{productId:productId}).then((res)=>{
-              // console.log(res);
-              if(res.data.status==0){
-                // alert("加入成功");
-                this.mdShowCart=true;
-                 this.$store.commit("updateCar",1)
-
-              }else{
-                this.mdShow=true;
-                // alert(res.data.msg);
-              }
-            })
-          },
-          closeMoadl(){
-             this.mdShow=false;
-          },
-          closeCart(){
-             this.mdShowCart=false;
+          shopgo(productId,classify){
+              this.$router.push({
+                    path:'/GoodsShop?shopid='+productId
+              })
           },
           loadMore(){
             this.busy=true
             setTimeout(()=>{
             this.page++
             this.getGoodsList(true);
-            this.busy=false
+              this.busy=false
             },1000)
           },
         }

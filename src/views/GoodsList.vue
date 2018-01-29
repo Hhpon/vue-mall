@@ -48,19 +48,16 @@
       <div class="accessory-list-wrap">
         <div class="accessory-list col-4">
           <ul>
-            <li v-for="(item,index) in goodsList">
+            <li v-for="(item,index) in goodsList"  @click="shopgo(item.productId,item.classify)">
               <div class="pic">
               <!-- 抓包数据 -->
-              <a href="#"><img v-lazy="item.productImage" alt=""></a>
+              <img v-lazy="item.productImage" alt="">
               <!-- 不使用抓包数据 请开启下面的代码 -->
                 <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
               </div>
               <div class="main">
                 <div class="name">{{item.productName}}</div>
-                <div class="price">{{item.salePrice|currency('$')}}</div>
-                <div class="btn-area">
-                  <a href="javascript:;" class="btn btn--m" @click="addCart(item.productId)">加入购物车</a>
-                </div>
+                <div class="price">{{item.salePrice|currency('&yen')}}</div>
               </div>
             </li>
           
@@ -75,31 +72,8 @@
       </div>
       <div class="md-overlay" v-show="overLayFlag" @click="closePop"></div>
       <nav-footer></nav-footer>
-         <modal v-bind:mdShow="mdShow" v-on:close="closeMoadl">
-          <p slot="message">
-             请先登录,否则无法加入到购物车中!
-          </p>
-          <div slot="btnGroup">
-              <a class="btn btn--m" href="javascript:;" @click="mdShow=false">关闭</a>
-          </div>
-      </modal>
-        <modal v-bind:mdShow="mdShowCart" v-on:close="closeCart">
-        <p slot="message">
-          <svg class="icon-status-ok">
-            <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-status-ok"></use>
-          </svg>
-          <span>加入购物车成!</span>
-        </p>
-        <div slot="btnGroup">
-          <a class="btn btn--m" href="javascript:;" @click="mdShowCart = false">继续购物</a>
-          <router-link class="btn btn--m btn--red" href="javascript:;" to="/cart">查看购物车</router-link>
-        </div>
-      </modal>
     </div>
 </template>
-<style type="text/css">
-
-</style>
 <script>
 import '../assets/css/checkout.css'
 import '../assets/css/product.css'
@@ -118,8 +92,7 @@ import axios from 'axios'
               pageSize:8,
               busy:true,
               loading:false,//加载中
-              mdShow:false,//未登录
-              mdShowCart:false,//购物车提示
+              classifys:'',
               priceGt:0,
               priceLte:0,
               //左边价格列表
@@ -237,17 +210,25 @@ import axios from 'axios'
               }
             })
           },
+          shopgo(productId,classify){
+                  switch(classify){
+         case '女装':this.classifys="0";break;
+         case '男装':this.classifys="1";break;
+         case '鞋子':this.classifys="2";break;
+         case '数码':this.classifys="3";break;
+         case '包箱':this.classifys="4";break;
+         case '食物':this.classifys="5";break;
+      }
+      console.log(this.classifys)
+              // this.$router.push({
+              //       path:'/GoodsShop?shopid='+productId+'&classify='+classify
+              // })
+          },
           //购物车模态框
           closePop(){
               this.filterby=false,
               this.overLayFlag=false
           },
-          closeMoadl(){
-             this.mdShow=false;
-          },
-          closeCart(){
-             this.mdShowCart=false;
-          }
         }
     }
 </script>

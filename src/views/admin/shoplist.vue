@@ -69,12 +69,13 @@
     </el-form-item>
       <el-form-item label="商品分类" :label-width="formLabelWidth" prop="classify">
     <el-select v-model="form.classify"  placeholder="请选择商品分类" >
-      <el-option label="女装" value="女装"></el-option>
-      <el-option label="男装" value="男装"></el-option>
-      <el-option label="数码" value="数码"></el-option>
-      <el-option label="包箱" value="包箱"></el-option>
-      <el-option label="食物" value="食物"></el-option>
-      <el-option label="其他" value="其他"></el-option>
+      <el-option label="女装" value="0"></el-option>
+      <el-option label="男装" value="1"></el-option>
+      <el-option label="鞋子" value="2"></el-option>
+      <el-option label="数码" value="3"></el-option>
+      <el-option label="包箱" value="4"></el-option>
+      <el-option label="食物" value="5"></el-option>
+      <el-option label="其他" value="6"></el-option>
     </el-select>
   </el-form-item>
   </el-form>
@@ -97,12 +98,12 @@
     </el-form-item>
       <el-form-item label="商品分类" :label-width="formLabelWidth" prop="classify">
     <el-select v-model="form.classify"  placeholder="请选择商品分类" >
-      <el-option label="女装" value="女装"></el-option>
-      <el-option label="男装" value="男装"></el-option>
-      <el-option label="数码" value="数码"></el-option>
-      <el-option label="包箱" value="包箱"></el-option>
-      <el-option label="食物" value="食物"></el-option>
-      <el-option label="其他" value="其他"></el-option>
+      <el-option label="女装" value="1"></el-option>
+      <el-option label="男装" value="2"></el-option>
+      <el-option label="数码" value="3"></el-option>
+      <el-option label="包箱" value="4"></el-option>
+      <el-option label="食物" value="5"></el-option>
+      <el-option label="其他" value="6"></el-option>
     </el-select>
   </el-form-item>
   </el-form>
@@ -248,7 +249,7 @@ import axios from 'axios'
                 sort:this.sortFlag?1:-1,
                 priceLevel:"all",
                 sort:1,
-                 shopname:this.sou.name
+                shopname:this.sou.name
             }
             this.loading=true;
             axios.get("/goods/list",{params:param}).then((result)=>{
