@@ -28,8 +28,6 @@
       <el-menu
         default-active="3-3"
         class="el-menu-vertical-demo"
-        @open="handleOpen"
-        @close="handleClose"
         :router="true"
         text-color="#000"
         active-text-color="#198dd4"
@@ -59,7 +57,7 @@
           </template>
           <el-menu-item-group>
             <el-menu-item index>
-              <a href="/junmall" target="_blank">打开首页</a>
+              <a href="/" target="_blank">打开首页</a>
             </el-menu-item>
           </el-menu-item-group>
           <el-menu-item-group>
