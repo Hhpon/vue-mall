@@ -1,19 +1,17 @@
-import Vue from 'vue'
-import Router from 'vue-router'
-import Index from '@/views/Index'
-import GoodsList from '@/views/GoodsList'
-import GoodsShop from '@/views/GoodsShop'
-import Cart from '@/views/Cart'
 import Address from '@/views/Address'
-import OrderConfirm from '@/views/OrderConfirm'
-import orderSuccess from '@/views/orderSuccess'
 import Admin from '@/views/admin/Admin'
 import Home from '@/views/admin/Home'
-import userlist from '@/views/admin/userlist'
-import shoplist from '@/views/admin/shoplist'
 import imglist from '@/views/admin/imglist'
-import test from '@/views/admin/test'
-import about from '@/views/admin/about'
+import shoplist from '@/views/admin/shoplist'
+import userlist from '@/views/admin/userlist'
+import Cart from '@/views/Cart'
+import GoodsList from '@/views/GoodsList'
+import GoodsShop from '@/views/GoodsShop'
+import Index from '@/views/Index'
+import OrderConfirm from '@/views/OrderConfirm'
+import orderSuccess from '@/views/orderSuccess'
+import Vue from 'vue'
+import Router from 'vue-router'
 Vue.use(Router)
 
 export default new Router({
@@ -67,8 +65,6 @@ export default new Router({
             { path: '/Home/userlist', component: userlist, name: 'userlist' },
             { path: '/Home/shoplist', component: shoplist, name: 'shoplist' },
             { path: '/Home/imglist', component: imglist, name: 'imglist' },
-            { path: '/Home/about', component: about, name: 'about' },
-            { path: '/Home/test', component: test, name: 'test' },
         ]
     },
     {
