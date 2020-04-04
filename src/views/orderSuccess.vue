@@ -21,7 +21,7 @@
         <h3>支付成功<br>订单将在1-7天内到达目的地。</h3>
         <p>
           <span>订单编号:{{orderId}}</span>
-          <span>订单总价格:{{orderTotal|currency('&yen')}}</span>
+          <span>订单总价格:{{orderTotal|currency('&yen;')}}</span>
         </p>
         <div class="order-create-btn-wrap">
           <div class="btn-l-wrap">

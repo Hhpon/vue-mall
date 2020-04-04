@@ -1,218 +1,244 @@
 <template>
-  <div>
-    <nav-header></nav-header>
-    <div>
-      <div class="swiper-container">
-        <div class="swiper-wrapper">
-          <div class="swiper-slide" v-for="(str,index) in listImg" :key="index">
-            <img :src="str.imgLink" alt />
+  <div style="height: 100vh;overflow:auto;">
+    <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30">
+      <nav-header></nav-header>
+      <div class="content">
+        <div>
+          <div class="swiper-container">
+            <div class="swiper-wrapper">
+              <div class="swiper-slide" v-for="(str,index) in listImg" :key="index">
+                <img :src="str.imgLink" alt />
+              </div>
+            </div>
+            <div class="swiper-pagination"></div>
+          </div>
+          <div class="accessory-result-page accessory-page">
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">女士专区</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in madams"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">男士专区</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in misters"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">精品鞋区</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in shoess"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">家电数码</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in digitals"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                          <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">箱包专区</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in boxs"
+                        @click="shopgo(item.productId,item.classify)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                          <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <span class="index_sort">美味零食</span>
+                <router-link class="default cur" to="/GoodsList">
+                  查看全部
+                  <span style="margin-left:5px;">&gt;</span>
+                </router-link>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-5">
+                    <ul>
+                      <li
+                        v-for="(item,index) in foods"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic">
+                          <img v-lazy="item.productImage" alt />
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div class="container">
+              <div class="index_nav">
+                <h1 class="text_center">猜你喜欢</h1>
+              </div>
+              <div class="accessory-result">
+                <!-- search result accessories list -->
+                <div class="accessory-list-wrap">
+                  <div class="accessory-list col-4">
+                    <ul>
+                      <li
+                        v-for="(item,index) in goodsList"
+                        @click="shopgo(item.productId)"
+                        :key="index"
+                      >
+                        <div class="pic" :a="item.productId">
+                          <img v-lazy="item.productImage" alt />
+                        </div>
+                        <div class="main">
+                          <div class="name">{{item.productName}}</div>
+                          <div class="price">{{item.salePrice|currency('&yen;')}}</div>
+                        </div>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
-        <div class="swiper-pagination"></div>
       </div>
-      <div class="accessory-result-page accessory-page">
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">女士专区</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li v-for="(item,index) in madams" @click="shopgo(item.productId)" :key="index">
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">男士专区</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li v-for="(item,index) in misters" @click="shopgo(item.productId)" :key="index">
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">精品鞋区</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li v-for="(item,index) in shoess" @click="shopgo(item.productId)" :key="index">
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">家电数码</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li v-for="(item,index) in digitals" @click="shopgo(item.productId)" :key="index">
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                      <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">箱包专区</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li
-                    v-for="(item,index) in boxs"
-                    @click="shopgo(item.productId,item.classify)"
-                    :key="index"
-                  >
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                      <!-- <a href="#"><img v-lazy="'/static/'+item.productImage" alt=""></a> -->
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <span class="index_sort">美味零食</span>
-            <router-link class="default cur" to="/GoodsList">
-              查看全部
-              <span style="margin-left:5px;">&gt;</span>
-            </router-link>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-5">
-                <ul>
-                  <li v-for="(item,index) in foods" @click="shopgo(item.productId)" :key="index">
-                    <div class="pic">
-                      <img v-lazy="item.productImage" alt />
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="container">
-          <div class="index_nav">
-            <h1 class="text_center">猜你喜欢</h1>
-          </div>
-          <div class="accessory-result">
-            <!-- search result accessories list -->
-            <div class="accessory-list-wrap">
-              <div class="accessory-list col-4">
-                <ul>
-                  <li
-                    v-for="(item,index) in goodsList"
-                    @click="shopgo(item.productId)"
-                    :key="index"
-                  >
-                    <div class="pic" :a="item.productId">
-                      <img v-lazy="item.productImage" alt />
-                    </div>
-                    <div class="main">
-                      <div class="name">{{item.productName}}</div>
-                      <div class="price">{{item.salePrice|currency('&yen;')}}</div>
-                    </div>
-                  </li>
-                </ul>
-                <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30" class="text_center">
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
+      <nav-footer></nav-footer>
     </div>
-    <nav-footer></nav-footer>
   </div>
 </template>
-<style>
+<style scoped>
+.index {
+  display: flex;
+}
 .index_nav {
   height: 55px;
   line-height: 55px;
@@ -438,8 +464,8 @@ export default {
       setTimeout(() => {
         this.page++;
         this.getGoodsList(true);
+        this.busy = false;
       }, 1000);
-      this.busy = false;
     }
   }
 };
