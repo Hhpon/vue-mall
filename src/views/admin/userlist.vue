@@ -13,7 +13,6 @@
       <el-table-column prop="createTime" label="注册时间" width="200"></el-table-column>
       <el-table-column label="操作">
         <template slot-scope="scope">
-          <el-button size="mini" @click="handleEdit(scope.$index, scope.row)">编辑</el-button>
           <el-button size="mini" type="danger" @click="handleDelete(scope.$index, scope.row)">删除</el-button>
         </template>
       </el-table-column>
@@ -37,14 +36,22 @@ export default {
     };
   },
   mounted() {
-    this.userlist(); //调用商品列表
+    this.userlist();
   },
   methods: {
-    handleEdit(index, row) {
-      this.$message.error("您没有权限编辑");
-    },
     handleDelete(index, row) {
-      this.$message.error("您没有权限删除");
+      axios
+        .get("/users/delete", { params: { userName: row.userName } })
+        .then(res => {
+          console.log(res);
+          if (res.data.status == "0") {
+            this.$message({
+              message: "修改成功",
+              type: "success"
+            });
+            this.userlist();
+          }
+        });
     },
     userlist(flag) {
       var param = {

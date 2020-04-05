@@ -1,7 +1,7 @@
 <template>
   <div style="height: 100vh;overflow:auto;">
     <div v-infinite-scroll="loadMore" infinite-scroll-disabled="busy" infinite-scroll-distance="30">
-      <nav-header></nav-header>
+      <nav-header @addshopbtn="addshopbtn"></nav-header>
       <div class="content">
         <div>
           <div class="swiper-container">
@@ -231,6 +231,33 @@
           </div>
         </div>
       </div>
+      <el-dialog title="添加商品" :visible.sync="addshopVisible">
+        <el-form :model="form" :rules="rules2" ref="form" name="form">
+          <el-form-item label="商品标题" :label-width="formLabelWidth" prop="productName">
+            <el-input v-model="form.productName" auto-complete="off" placeholder="请输商品标题"></el-input>
+          </el-form-item>
+          <el-form-item label="商品价格" :label-width="formLabelWidth" prop="salePrice">
+            <el-input v-model="form.salePrice" auto-complete="off" placeholder="输入价格"></el-input>
+          </el-form-item>
+          <el-form-item label="商品图片" :label-width="formLabelWidth" prop="productImage">
+            <el-input v-model="form.productImage" auto-complete="off" placeholder="请输入图片地址"></el-input>
+          </el-form-item>
+          <el-form-item label="商品分类" :label-width="formLabelWidth" prop="classify">
+            <el-select v-model="form.classify" placeholder="请选择商品分类">
+              <el-option label="女装" value="1"></el-option>
+              <el-option label="男装" value="2"></el-option>
+              <el-option label="数码" value="3"></el-option>
+              <el-option label="包箱" value="4"></el-option>
+              <el-option label="食物" value="5"></el-option>
+              <el-option label="其他" value="6"></el-option>
+            </el-select>
+          </el-form-item>
+        </el-form>
+        <div slot="footer" class="dialog-footer">
+          <el-button @click="addshopVisible = false">取 消</el-button>
+          <el-button type="primary" @click="addshop('form')">确 定</el-button>
+        </div>
+      </el-dialog>
       <nav-footer></nav-footer>
     </div>
   </div>
@@ -288,6 +315,34 @@ import axios from "axios";
 import Swiper from "swiper";
 export default {
   data() {
+    var validatename = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(new Error("请输商品标题"));
+      } else {
+        callback();
+      }
+    };
+    var validatePrice = (rule, value, callback) => {
+      if (isNaN(parseFloat(value))) {
+        callback(new Error("输入商品价格(注:必须为数字)"));
+      } else {
+        callback();
+      }
+    };
+    var validateImage = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(new Error("请输入图片地址"));
+      } else {
+        callback();
+      }
+    };
+    var validateclassify = (rule, value, callback) => {
+      if (value.trim() === "") {
+        callback(new Error("请选择商品分类"));
+      } else {
+        callback();
+      }
+    };
     return {
       madams: [],
       misters: [],
@@ -303,7 +358,22 @@ export default {
       priceChecked: "all",
       classify: 0,
       busy: false,
-      listImg: []
+      addshopVisible: false,
+      formLabelWidth: "120px",
+      listImg: [],
+      form: {
+        id: "",
+        productName: "",
+        salePrice: "",
+        productImage: "",
+        classify: ""
+      },
+      rules2: {
+        productName: [{ validator: validatename, trigger: "blur,change" }],
+        salePrice: [{ validator: validatePrice, trigger: "blur,change" }],
+        productImage: [{ validator: validateImage, trigger: "blur,change" }],
+        classify: [{ validator: validateclassify, trigger: "blur,change" }]
+      }
     };
   },
   components: {
@@ -313,34 +383,64 @@ export default {
     Modal
   },
   mounted() {
-    axios.get("/admin/imglist").then(result => {
-      this.loading = false;
-      let res = result.data;
-      if (res.status == "0") {
-        this.listImg = res.result.list;
-        setTimeout(function() {
-          var swiper = new Swiper(".swiper-container", {
-            pagination: ".swiper-pagination",
-            paginationClickable: true,
-            loop: true,
-            speed: 600,
-            autoplay: 3000,
-            onTouchEnd: function() {
-              swiper.startAutoplay();
-            }
-          });
-        }, 1000);
-      }
-    });
-    this.madam();
-    this.mister();
-    this.shoes();
-    this.digital();
-    this.box();
-    this.food();
-    this.getGoodsList();
+    this.getInit();
   },
   methods: {
+    getInit() {
+      axios.get("/admin/imglist").then(result => {
+        this.loading = false;
+        let res = result.data;
+        if (res.status == "0") {
+          this.listImg = res.result.list;
+          setTimeout(function() {
+            var swiper = new Swiper(".swiper-container", {
+              pagination: ".swiper-pagination",
+              paginationClickable: true,
+              loop: true,
+              speed: 600,
+              autoplay: 3000,
+              onTouchEnd: function() {
+                swiper.startAutoplay();
+              }
+            });
+          }, 1000);
+        }
+      });
+      this.madam();
+      this.mister();
+      this.shoes();
+      this.digital();
+      this.box();
+      this.food();
+      this.getGoodsList();
+    },
+    addshop(formName) {
+      this.$refs[formName].validate(valid => {
+        if (valid) {
+          axios
+            .post("/admin/addshop", {
+              productName: this.form.productName,
+              salePrice: this.form.salePrice,
+              productImage: this.form.productImage,
+              classify: this.form.classify
+            })
+            .then(respone => {
+              let res = respone.data;
+              if (res.status == "0") {
+                this.$message({
+                  message: "添加成功",
+                  type: "success"
+                });
+              }
+              this.getInit();
+              this.addshopVisible = false;
+            });
+        }
+      });
+    },
+    addshopbtn() {
+      this.addshopVisible = true;
+    },
     madam() {
       var param = {
         pageSize: 5,

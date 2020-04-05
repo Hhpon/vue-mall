@@ -4,7 +4,7 @@
       <el-col :span="24">
         <el-col :span="16" class="logo">
           <span>
-            <!-- 俊猫商城管理系统 -->
+            <!-- 二手商城管理系统 -->
             <a href="/#/Home/about">
               <img src="static/adminlogo.png" />
             </a>
@@ -94,7 +94,7 @@
               type="password"
               v-model="ruleForm2.confirmPass"
               auto-complete="off"
-              placeholder="确认密码"
+              placeholder="新密码"
             ></el-input>
           </el-form-item>
           <el-form-item style="width:100%;">
@@ -122,7 +122,7 @@ export default {
         checkPass: ""
       },
       rules2: {
-        confirmPass: [{ required: true, message: "确认密码", trigger: "blur" }],
+        confirmPass: [{ required: true, message: "新密码", trigger: "blur" }],
         checkPass: [{ required: true, message: "原密码", trigger: "blur" }]
       }
     };

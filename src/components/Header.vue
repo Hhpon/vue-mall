@@ -2,13 +2,14 @@
   <header class="header">
     <div class="navbar">
       <div class="navbar-left-container">
-        <a href="/junmall">
+        <a href="/">
           <img class="navbar-brand-logo" src="static/logo.png" />
         </a>
       </div>
       <div class="navbar-right-container" style="display: flex;">
         <div class="navbar-menu-container">
-          <!--<a href="/" class="navbar-link">我的账户</a>-->
+          <!-- <a href="/" class="navbar-link">我的账户</a> -->
+          <el-button type="primary" @click="addshopbtn()" v-if="showNew">我要发布</el-button>
           <span v-if="nikeName">{{nikeName}}</span>
           <a
             href="javascript:void(0)"
@@ -23,11 +24,24 @@
             v-if="!nikeName"
           >注册</a>
           <a href="javascript:void(0)" class="navbar-link" @click="logOut" v-if="nikeName">退出</a>
-          <div class="navbar-cart-container">
+          <div class="navbar-cart-container" v-if="nikeName">
             <span class="navbar-cart-count" v-if="carCount>0">{{carCount}}</span>
             <a class="navbar-link navbar-cart-link" @click="cart">
-              <svg class="navbar-cart-logo">
-                <use xmlns:xlink="http://www.w3.org/1999/xlink" xlink:href="#icon-cart" />
+              <svg
+                t="1586013989622"
+                class="icon"
+                viewBox="0 0 1024 1024"
+                version="1.1"
+                xmlns="http://www.w3.org/2000/svg"
+                p-id="2531"
+                width="20"
+                height="20"
+              >
+                <path
+                  d="M993.34853 132.205377c21.370157 22.498581 30.996714 53.864779 27.062209 86.718899l-57.369884 305.922783c-6.281228 47.593536-52.227066 86.129721-104.703783 86.129721l-491.034278 33.702935c-0.948675 0.259637-2.047141 0.259637-2.846026 0.259637-18.893615 0-34.931219-13.640951-36.289323-31.476044-1.388062-18.823713 13.710853-34.901261 33.553144-36.389183l493.630653-33.952586c18.094731-0.149791 33.293506-13.381313 35.370605-28.520172l57.369884-305.882839c1.348117-11.454005-2.047141-23.996489-9.267059-31.655793a23.731859 23.731859 0 0 0-17.535512-7.369709H291.308918c-20.131886 0-36.459085-15.238719-36.459086-33.912641 0-18.70388 16.47699-33.952586 36.459086-33.952586h630.120047c27.871078 0 53.285588 10.754981 71.919565 30.377578z m-83.513374 580.639147c16.556879 0 36.469072 17.355763 36.469071 36.31928 0 18.673922-16.197381 36.469072-36.469071 36.469072H318.920359c-52.516661 0-98.572345-43.469296-104.953434-92.850336L152.223149 287.478541 117.142139 97.993154c-2.186946-16.636767-18.384327-24.945164-34.162293-24.945164H36.624581c-20.131886 0-36.429127-20.311635-36.429128-39.015516 0-18.594034 16.447032-33.912642 36.469072-33.912641h46.315321c53.02595 0 99.740714 33.912642 107.210283 97.883307l33.912641 189.485387 61.923525 396.326536c2.047141 15.787952 17.395707 29.029461 32.744273 29.029461h591.104532-0.039944zM291.938039 948.275748s0 40.29373 0 0c0-40.283744 32.654399-72.938143 72.938143-72.938143s72.938143 32.654399 72.938143 72.938143-32.654399 72.938143-72.938143 72.938143-72.938143-32.654399-72.938143-72.938143z m437.608886 0s0 40.29373 0 0c0-40.283744 32.654399-72.938143 72.938143-72.938143s72.938143 32.654399 72.938143 72.938143-32.654399 72.938143-72.938143 72.938143-72.938143-32.654399-72.938143-72.938143z m0 0"
+                  fill="#333333"
+                  p-id="2532"
+                />
               </svg>
             </a>
           </div>
@@ -214,15 +228,19 @@ export default {
     };
   },
   mounted() {
+    console.log(this.$route.path);
     this.checklogin();
   },
   computed: {
-    ...mapState(["carCount", "mdShow"]) //简写
-    // carCount(){
-    // return this.$store.state.carCount;
-    // },
+    ...mapState(["carCount", "mdShow"]), //简写
+    showNew() {
+      return this.nikeName && this.$route.path === "/";
+    }
   },
   methods: {
+    addshopbtn() {
+      this.$emit("addshopbtn");
+    },
     checklogin() {
       axios.get("/users/checklogin").then(res => {
         if (res.data.status == "0") {
@@ -377,7 +395,9 @@ export default {
     getCart() {
       axios.get("/users/getCart").then(renponse => {
         let res = renponse.data;
-        this.$store.commit("initCar", res.result);
+        if (res.status == "0") {
+          this.$store.commit("initCar", res.result);
+        }
       });
     }
   }

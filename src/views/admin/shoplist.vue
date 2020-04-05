@@ -173,7 +173,6 @@ export default {
       },
       formLabelWidth: "120px",
       rules2: {
-        //注册
         productName: [{ validator: validatename, trigger: "blur,change" }],
         salePrice: [{ validator: validatePrice, trigger: "blur,change" }],
         productImage: [{ validator: validateImage, trigger: "blur,change" }],
